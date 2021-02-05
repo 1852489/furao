@@ -29,9 +29,39 @@ public class PlayerController {
         playermapper.addPlayer(player1);
     };
     @ResponseBody
+    @RequestMapping("/getPlayer")
+    public Object getPlayer(String id){
+        return playermapper.getPlayer(id);
+    }
+    @ResponseBody
+    @RequestMapping("/getName")
+    public Object getName(String id){
+        return playermapper.getName(id);
+    }
+    @ResponseBody
+    @RequestMapping("/getIsking")
+    public int getIsking(String id){
+        return playermapper.getIsking(id);
+    }
+    @ResponseBody
+    @RequestMapping("/updateIsking")
+    public void updateIsking(String id,int n){
+        playermapper.updateCardnum(id,n);
+    }
+    @ResponseBody
+    @RequestMapping("/getCardnum")
+    public int getCardnum(String id){
+        return playermapper.getCardnum(id);
+    }
+    @ResponseBody
     @RequestMapping("/updateCardnum")
     public void updateCardnum(String id,int num){
         playermapper.updateCardnum(id,num);
+    }
+    @ResponseBody
+    @RequestMapping("/getMoney")
+    public int getMoney(String id){
+        return playermapper.getMoney(id);
     }
     @ResponseBody
     @RequestMapping("/updateMoney")
@@ -39,9 +69,19 @@ public class PlayerController {
         playermapper.updateMoney(id,num);
     }
     @ResponseBody
+    @RequestMapping("/getOrder")
+    public int getOrder(String id){
+        return playermapper.getOrder(id);
+    }
+    @ResponseBody
     @RequestMapping("/updateOrder")
     public void updateOrder(String id,int num){
         playermapper.updateOrder(id,num);
+    }
+    @ResponseBody
+    @RequestMapping("/getPoint")
+    public int getPoint(String id){
+        return playermapper.getPoint(id);
     }
     @ResponseBody
     @RequestMapping("/updatePoint")
@@ -49,9 +89,24 @@ public class PlayerController {
         playermapper.updatePoint(id,num);
     }
     @ResponseBody
+    @RequestMapping("/getRoleid")
+    public int getRoleid(String id){
+        return playermapper.getRoleid(id);
+    }
+    @ResponseBody
     @RequestMapping("/updateRoleid")
     public void updateRoleid(String id,String role_id){
         playermapper.updateRoleid(id,role_id);
+    }
+    @ResponseBody
+    @RequestMapping("/getArchnum")
+    public Object getArchnum(String id){
+        return playermapper.getArchnum(id);
+    }
+    @ResponseBody
+    @RequestMapping("/getNoble")
+    public Object getNoble(String id){
+        return playermapper.getNoble(id);
     }
     @ResponseBody
     @RequestMapping("/updateNoble")
@@ -59,9 +114,19 @@ public class PlayerController {
         playermapper.updateNoble(id,num);
     }
     @ResponseBody
+    @RequestMapping("/getTrade")
+    public Object getTrade(String id){
+        return playermapper.getTrade(id);
+    }
+    @ResponseBody
     @RequestMapping("/updateReligious")
     public void updateReligious( String id,int num){
         playermapper.updateReligious(id,num);
+    }
+    @ResponseBody
+    @RequestMapping("/getReligious")
+    public Object getReligious(String id){
+        return playermapper.getReligious(id);
     }
     @ResponseBody
     @RequestMapping("/updateTrade")
@@ -69,9 +134,19 @@ public class PlayerController {
         playermapper.updateTrade(id,num);
     }
     @ResponseBody
+    @RequestMapping("/getMiltary")
+    public Object getMiltary(String id){
+        return playermapper.getMiltary(id);
+    }
+    @ResponseBody
     @RequestMapping("/updateMiltary")
     public void updateMiltary( String id,int num){
         playermapper.updateMiltary(id,num);
+    }
+    @ResponseBody
+    @RequestMapping("/getUnique")
+    public Object getUnique(String id){
+        return playermapper.getUnique(id);
     }
     @ResponseBody
     @RequestMapping("/updateUnique")

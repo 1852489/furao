@@ -16,6 +16,7 @@ import java.util.Map;
 public class CardController {
     @Autowired
     private CardMapper cardmapper;
+
     @ResponseBody
     @RequestMapping("/getallCard")
     public Object getallCard(){
@@ -30,6 +31,7 @@ public class CardController {
     @ResponseBody
     @RequestMapping("/getFirstcard")
     public Object getFirstcard(int order){
+
         return cardmapper.getFirstcard(order);
     }
     @ResponseBody

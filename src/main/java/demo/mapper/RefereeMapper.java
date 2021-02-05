@@ -8,7 +8,7 @@ import java.util.ArrayList;
 @Repository
 @Mapper
 public interface RefereeMapper {
-    @Insert("insert into referee values(#{id},#{crown_num},#{heap_first},#{heap_last})")
+    @Insert("insert into referee values(#{id},#{crown_num},#{heap_first},#{heap_last},#{player_num},#{state},#{state_order})")
     void insertReferee(Referee ref);
     @Select("select crown_num from referee where id=#{id}")
     int getCrown(String id);

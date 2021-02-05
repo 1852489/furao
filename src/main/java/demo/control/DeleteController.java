@@ -36,6 +36,15 @@ public class DeleteController {
     public void deleteReferee(){
         deleteallmapper.deleteReferee();
     };
+    @ResponseBody
+    @RequestMapping("/deleteAll")
+    public void deleteAll(){
+        deleteallmapper.deleteCardorder();
+        deleteallmapper.deletePlayer();
+        deleteallmapper.deletePlayerarch();
+        deleteallmapper.deletePlayercard();
+        deleteallmapper.deleteReferee();
+    };
 
 
 

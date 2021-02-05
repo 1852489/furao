@@ -31,23 +31,37 @@ public class ExternalController {
         return externalmapper.getPlayernum();
     }
     @ResponseBody
+    @RequestMapping("/selectFirstcard")
+    public Object selectFirstcard(int order){
+        Card_order cardorder=cardmapper.getFirstcard(order);
+        refereemapper.updateHeapfirst("1",order+1);
+        cardmapper.deleteFirstcard(order);
+        return cardorder;
+    }
+    @ResponseBody
     @RequestMapping("/heapTohand")
     public void heapTohand(@RequestBody Map<String,Object>map){
         String playerid=map.get("player_id").toString();
+        int cardnum=playermapper.getCardnum(playerid);
         int order=(int)map.get("order");
+        int firstorder=refereemapper.getHeapfirst("1");
         String cardid=map.get("card_id").toString();
         Player_card playercard=new Player_card(playerid,cardid,order);
-        cardmapper.deleteFirstcard(order);
+       // cardmapper.deleteFirstcard(order);
+       // refereemapper.updateHeapfirst("1",firstorder+1);
         playermapper.insertCard(playercard);
+        playermapper.updateCardnum(playerid,cardnum+1);
     }
     @ResponseBody
     @RequestMapping("/heapTolast")
     public void heapTolast(@RequestBody Map<String,Object>map){
-        int order=(int)map.get("order");
+        //int order=(int)map.get("order");
+        int lastorder=refereemapper.getHeaplast("1");
         String cardid=map.get("card_id").toString();
-        Card_order cardorder=new Card_order(order,cardid);
-        cardmapper.deleteFirstcard(order);
+        Card_order cardorder=new Card_order(lastorder,cardid);
+       // cardmapper.deleteFirstcard(order);
         cardmapper.insertLastcard(cardorder);
+        refereemapper.updateHeaplast("1",lastorder+1);
     }
     @ResponseBody
     @RequestMapping("/handToarch")
@@ -61,9 +75,11 @@ public class ExternalController {
         int left=money-pay;
         int point=playermapper.getPoint(playerid);
         int point1=point +pay;
+        int cardnum=playermapper.getCardnum(playerid);
         Arch_kind archkind=playermapper.getArchnum(playerid);
         Player_arch playerarch=new Player_arch(playerid,cardid,order);
         playermapper.deleteCard(order);
+        playermapper.updateCardnum(playerid,cardnum-1);
         playermapper.updateMoney(playerid,left);
         playermapper.insertArch(playerarch);
         playermapper.updatePoint(playerid,point1);

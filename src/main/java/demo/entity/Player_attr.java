@@ -1,19 +1,19 @@
 package demo.entity;
 
-public class Player {
-    String player_id;
-    String name;
-    //卡牌数
-    int card_num=0;
-    //金币
+public class Player_attr {
+
+String player_id;
+String name;
+        int card_num=0;
+//    //金币
     int money=0;
-    //本局顺序号，跟王冠顺序发放有关
+//    //本局顺序号，跟王冠顺序发放有关
     int order;
-    //是否是国王
+//    //是否是国王
     int isking=0;
-    //当前积分，不包括特殊加分
+//    //当前积分，不包括特殊加分
     int point=0;
-    //角色id，每局都会改变
+//    //角色id，每局都会改变
     String role_id;
     //各种种类的建筑数目
     int noble=0;
@@ -21,20 +21,17 @@ public class Player {
     int trade=0;
     int miltary=0;
     int unique=0;
-
-    public Player(String player_id, String name, int order) {
+    public Player_attr(String player_id, String name, int order) {
         this.player_id = player_id;
         this.name = name;
         this.order = order;
     }
     //重写
-//    public Player(String player_id, String name) {
-//        this.player_id = player_id;
-//        this.name = name;
-//    }
 
-
-
+    public Player_attr(String player_id, String name) {
+        this.player_id = player_id;
+        this.name = name;
+    }
     public String getPlayer_id() {
         return player_id;
     }
@@ -58,9 +55,6 @@ public class Player {
     public void setCard_num(int card_num) {
         this.card_num = card_num;
     }
-    public void addCard(int n){
-        this.card_num=this.card_num+n;
-    }
 
     public int getMoney() {
         return money;
@@ -68,9 +62,6 @@ public class Player {
 
     public void setMoney(int money) {
         this.money = money;
-    }
-    public void addMoney(int n){
-        this.money=this.money+n;
     }
 
     public int getOrder() {
@@ -80,7 +71,6 @@ public class Player {
     public void setOrder(int order) {
         this.order = order;
     }
-
     public int getIsking() {
         return isking;
     }
@@ -95,9 +85,6 @@ public class Player {
 
     public void setPoint(int point) {
         this.point = point;
-    }
-    public void addPoint(int n){
-        this.point=this.point +n;
     }
 
     public String getRole_id() {
@@ -115,9 +102,6 @@ public class Player {
     public void setNoble(int noble) {
         this.noble = noble;
     }
-    public void addNoble(int n){
-        this.noble=this.noble+n;
-    }
 
     public int getReligious() {
         return religious;
@@ -125,9 +109,6 @@ public class Player {
 
     public void setReligious(int religious) {
         this.religious = religious;
-    }
-    public void addReligious(int n){
-        this.religious=this.religious+n;
     }
 
     public int getTrade() {
@@ -137,9 +118,6 @@ public class Player {
     public void setTrade(int trade) {
         this.trade = trade;
     }
-    public void addTrade(int n){
-        this.trade=this.trade+n;
-    }
 
     public int getMiltary() {
         return miltary;
@@ -148,9 +126,6 @@ public class Player {
     public void setMiltary(int miltary) {
         this.miltary = miltary;
     }
-    public void addMiltary(int n){
-        this.miltary=this.miltary+n;
-    }
 
     public int getUnique() {
         return unique;
@@ -158,8 +133,5 @@ public class Player {
 
     public void setUnique(int unique) {
         this.unique = unique;
-    }
-    public void addUnique(int n){
-        this.unique=this.unique+n;
     }
 }
