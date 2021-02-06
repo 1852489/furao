@@ -25,10 +25,42 @@ public class ExternalController {
     private RefereeMapper refereemapper;
     @Autowired
     private DeleteallMapper deleteallmapper;
+    @Autowired
+    private RoleMapper rolemapper;
     @ResponseBody
     @RequestMapping("/getPlayernum")
     public int getPlayernum(){
         return externalmapper.getPlayernum();
+    }
+    @ResponseBody
+    @RequestMapping("/initRolestate")
+    public void initRolestate(int max,int choice){
+        rolemapper.deleteRolestate();
+        for(int i=1;i<=max;i++){
+            rolemapper.insertRolestate(""+i,1);
+        }
+        for(int j=0;j<3;j++){
+
+                int ran=(int)(Math.random()*max+1);
+                if(rolemapper.getRoleleft(""+ran)==0)j--;
+                else {
+                    rolemapper.updateRoleleft(""+ran,0);
+                }
+
+        }
+
+    }
+    @ResponseBody
+    @RequestMapping("/getRolestate")
+    public Object getRolestate(){
+        ArrayList<Role_state>rol = new ArrayList<>();
+        for(int i=1;i<=9;i++){
+            Role_state rs1=rolemapper.getRolestate(""+i);
+            if(rs1==null)break;
+            else if(rs1.getLeft()==0)continue;
+            else rol.add(rs1);
+        }
+        return rol;
     }
     @ResponseBody
     @RequestMapping("/selectFirstcard")

@@ -1,0 +1,231 @@
+function addtwoplayers(){
+			var addplayer = {
+			  "url": "http://localhost:8086/player/addPlayer",
+			  "method": "POST",
+			  "timeout": 0,
+			  "headers": {
+			    "Content-Type": "application/json"
+			  },
+			  "data": JSON.stringify({"player_id":"1","name":"gyq","order":1}),
+			};
+			
+			$.ajax(addplayer).done(function (response) {
+			  console.log(response);
+			});
+			
+			var addplayer2 = {
+			  "url": "http://localhost:8086/player/addPlayer",
+			  "method": "POST",
+			  "timeout": 0,
+			  "headers": {
+			    "Content-Type": "application/json"
+			  },
+			  "data": JSON.stringify({"player_id":"2","name":"twk","order":2}),
+			};
+			
+			$.ajax(addplayer2).done(function (response) {
+			  console.log(response);
+			});
+			
+			var settings = {
+			  "url": "http://localhost:8086/referee/insertReferee",
+			  "method": "POST",
+			  "timeout": 0,
+			  "headers": {
+			    "Content-Type": "application/json"
+			  },
+			  "data": JSON.stringify({"crown_num":1,"heap_first":1,"heap_last":49}),
+			};
+			
+			$.ajax(settings).done(function (response) {
+			  console.log(response);
+			});
+		}
+		
+		function initialize(){
+			//《初始化
+			var init = {
+			  "url": "http://localhost:8086/external/initialize",
+			  "method": "POST",
+			  "timeout": 0,
+			  "headers": {
+			    "Content-Type": "application/json"
+			  },
+			};
+			
+			$.ajax(init).done(function (response) {
+			  console.log(response);
+			});
+			//初始化》
+			var heapfirst=1;
+			var cardid1="";
+			//获得牌顶
+			for(i=0;i<1;i++){
+			var getfirst = {
+			  "url": "http://localhost:8086/referee/getHeapfirst?id=1",
+			  "method": "GET",
+			  "timeout": 0,
+			  "headers": {
+			    "Content-Type": "application/json"
+			  },
+			};
+			
+			$.ajax(getfirst).done(function (response) {
+					console.log(response);
+					heapfirst=response;
+					console.log(heapfirst);
+			});
+			var selectfirst = {
+			  "url": "http://localhost:8086/external/selectFirstcard?order=1",
+			  "method": "POST",
+			  "timeout": 0,
+			  "headers": {
+			    "Content-Type": "application/json"
+			  },
+			};
+			$.ajax(selectfirst).done(function (response) {
+			  console.log(response);
+			  cardid1=response.card_id;
+			  console.log(cardid1);
+			});
+			var settings = {
+			  "url": "http://localhost:8086/external/heapTohand",
+			  "method": "POST",
+			  "timeout": 0,
+			  "headers": {
+			    "Content-Type": "application/json"
+			  },
+			  "data": JSON.stringify({"player_id":"1","order":heapfirst,"card_id":cardid1}),
+			};
+			
+			$.ajax(settings).done(function (response) {
+			  console.log(response);
+			});
+			}
+			}
+		
+		
+		function deleteall(){
+			var settings = {
+			  "url": "http://localhost:8086/delete/deleteAll",
+			  "method": "POST",
+			  "timeout": 0,
+			  "headers": {
+			    "Content-Type": "application/json"
+			  },
+			};
+			
+			$.ajax(settings).done(function (response) {
+			  console.log(response);
+			});
+			}
+		
+	    function refresh(){
+			var settings = {
+			  "url": "http://localhost:8086/player/getPlayer?id=1",
+			  "method": "GET",
+			  "timeout": 0,
+			  "headers": {
+			    "Content-Type": "application/json"
+			  },
+			};
+			
+			$.ajax(settings).done(function (response) {
+			  console.log(response);
+			  $("#hand1").html(response.card_num);
+			  $("#money1").html(response.money);
+			  $("#point1").html(response.point);
+			  $("#role1").html(response.role_id);
+			  $("#noble1").html(response.noble);
+			  $("#religious1").html(response.religious);
+			  $("#trade1").html(response.trade);
+			  $("#miltary1").html(response.miltary);
+			  $("#unique1").html(response.unique);
+			});
+			var settings1 = {
+			  "url": "http://localhost:8086/player/getPlayer?id=2",
+			  "method": "GET",
+			  "timeout": 0,
+			  "headers": {
+			    "Content-Type": "application/json"
+			  },
+			};
+			
+			$.ajax(settings1).done(function (response) {
+			  console.log(response);
+			  $("#hand2").html(response.card_num);
+			  $("#money2").html(response.money);
+			  $("#point2").html(response.point);
+			  $("#role2").html(response.role_id);
+			  $("#noble2").html(response.noble);
+			  $("#religious2").html(response.religious);
+			  $("#trade2").html(response.trade);
+			  $("#miltary2").html(response.miltary);
+			  $("#unique2").html(response.unique);
+			});
+			
+			}
+		
+		function end(){
+			var settings = {
+			  "url": "http://localhost:8086/external/initialize",
+			  "method": "POST",
+			  "timeout": 0,
+			  "headers": {
+			    "Content-Type": "application/json"
+			  },
+			};
+			
+			$.ajax(settings).done(function (response) {
+			  console.log(response);
+			});
+			// $.ajax({
+			// 	"url": "http://localhost:8086/external/selectFirstcard?order="+1,
+			// 	"method": "GET",
+			// 	"timeout": 0,
+			// 	"headers": {
+			// 	  "Content-Type": "application/json"
+			// 	},
+			// 	success:function(response){
+			// 		if (response.success == true) {
+			// 			str=JSON.stringify(response);
+			// 			console.log(response);
+			// 			console.log(str);
+			// 	}
+			// 	else{
+			// 		console.log("false");
+			// 	}
+			// 	},
+			// 	error:function(e){
+			// 		console(e.status);
+			// 	}
+			// });
+			var settings = {
+			  "url": "http://localhost:8086/external/selectFirstcard?order=1",
+			  "method": "POST",
+			  "timeout": 0,
+			  
+			};
+			
+			$.ajax(settings).done(function (response) {
+				   			console.log(response);		 
+			});
+			console.log("ok");
+			
+			}
+		function init(){
+			var heapfirst=2;
+			var selectfirst = {
+			  "url": "http://localhost:8086/external/selectFirstcard?order=2",
+			  "method": "POST",
+			  "timeout": 0,
+			  "headers": {
+			    "Content-Type": "application/json"
+			  },
+			};
+			$.ajax(selectfirst).done(function (response) {
+			  console.log(response);
+			  cardid1=response.card_id;
+			  console.log(cardid1);
+			});
+		}

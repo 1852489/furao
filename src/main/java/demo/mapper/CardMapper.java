@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public interface CardMapper {
     @Select("select * from card")
     ArrayList<Card> getallCard();
-    @Select("select * from card where id=#{id}")
+    @Select("select * from card where card_id=#{id}")
     Card getbyId(String id);
 
     @Select("select * from card_heap where card_order=#{order}")

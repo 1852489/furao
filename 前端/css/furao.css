@@ -1,0 +1,95 @@
+.box1{
+	height: 120px;
+	width:100%;
+	background-color:#aaff7f;
+}
+.box1 .img{
+	margin-top:10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	width:70px;
+	height: 100px;
+	float:left;
+	background-color:#55ffff;
+}
+.box1 .mes{
+	margin-top:10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	height:6.25rem;
+	width:440px;
+	float:left;
+	background-color:#ffffff;
+}
+.box1 .handcard{
+	margin: 10px 5px 10px 10px;
+	float: left;
+	height: 100px;
+	width:640px;
+	background-color: #FFFF7F;
+}
+.box1 .handcard .card{
+	margin-left:5px;
+	margin-right: 5px;
+	float: left;
+	height: 100px;
+	width:70px;
+	background-size:70px 100px;
+	background-image:url(../img/default.png);
+}
+
+.box1 .mes .hand{
+	margin-left:5px ;
+	height:100px;
+	width: 70px;
+	float: left;
+/* 	background: #FFFF7F; */
+    background-size:70px 100px;
+	background-image:url(../img/default.png);
+}
+.box1 .mes .arch{
+	margin-left: 5px;
+	height:100px;
+	width:355px;
+	float: left;
+	background-color: #ffaaff;
+}
+.box1 .mes .arch .top{
+	margin-top: 2px;
+	height:45px;
+	width:350px;
+	background-color: #ff0000;
+}
+.box1 .mes .arch .top .menu{
+	float: left;
+	line-height: 40px;
+	margin-top: 2px;
+	margin-left:3px;
+	height:40px;
+	width:110px;
+	background-color: #f8dc02;
+}
+.box1 .mes .arch .down{
+	margin-bottom: 2px;
+	margin-top: 5px;
+	height:45px;
+	width:350px;
+	background-color: #aa0000;
+}
+.box1 .mes .arch .down .menu{
+	float: left;
+	margin-top: 2px;
+	margin-left: 3px;
+	height:40px;
+	width:65px;
+	background-color: #a07baa;
+}
+.box1 .style{
+
+	margin-top: 10px;
+	margin-right: 100px;
+	
+	height: 6.25rem;
+	
+	background-color:#ffff7f;
+}

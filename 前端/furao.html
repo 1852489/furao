@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>castle</title>
+		<link rel="stylesheet" type="text/css" href="css/furao.css" />
+		<script src="js/furao.js"></script>
+		<script src="js/jquery.min.js"></script>
+	</head>
+	<body>
+		<div class="box1">
+			
+			<div class="img">
+				<img src="img/default.png" width="70px" height="100px" id="role1">
+			</div>
+			<div class="mes">
+				<div class="hand"><p style="margin-top:50%;font-size: 25px;text-align: center;color: #AAFF7F;" id="hand1"></p></div>
+				<div class="arch">
+					<div class="top">
+						<div class="menu">金币：<span id="money1"></span></div>
+						<div class="menu">得分：<span id="point1"></span></div>
+						<div class="menu"></div>
+					</div>
+					<div class="down">
+						<div class="menu"><p id="noble1"></p></div>
+						<div class="menu"><p id="religious1"></p></div>
+						<div class="menu"><p id="trade1"></p></div>
+						<div class="menu"><p id="miltary1"></p></div>
+						<div class="menu"><p id="unique1"></p></div>
+					</div>
+				</div>
+			</div>
+			<div class="handcard">
+				<div class="card"></div>
+				<div class="card"></div>
+				<div class="card"></div>
+				<div class="card"></div>
+				<div class="card"></div>
+				<div class="card"></div>
+				<div class="card"></div>
+			</div>
+		</div>
+		
+		
+		<div class="box1">
+			
+			<div class="img">
+				<img src="image/default.png" width="70px" height="100px" id="role2">
+			</div>
+			<div class="mes">
+				<div class="hand"><p style="margin-top:50%;font-size: 25px;text-align: center;color: #AAFF7F;" id="hand2"></p></div>
+				<div class="arch">
+					<div class="top">
+						<div class="menu">金币：<span id="money2"></span></div>
+						<div class="menu">得分：<span id="point2"></span></div>
+						<div class="menu"></div>
+					</div>
+					<div class="down">
+						<div class="menu"><p id="noble2"></p></div>
+						<div class="menu"><p id="religious2"></p></div>
+						<div class="menu"><p id="trade2"></p></div>
+						<div class="menu"><p id="miltary2"></p></div>
+						<div class="menu"><p id="unique2"></p></div>
+					</div>
+				</div>
+			</div>
+			<div class="handcard">
+				<div class="card"></div>
+				<div class="card"></div>
+				<div class="card"></div>
+				<div class="card"></div>
+				<div class="card"></div>
+				<div class="card"></div>
+				<div class="card"></div>
+			</div>
+		</div>
+		<div class="box1">
+			<button id="deleteall"><a href="javascript:deleteall();">清空数据（初始化动态table）</a></button>
+			<button id="addplayer"><a href="javascript:addtwoplayers();">添加两个player</a></button>
+			<button id="initialize"><a href="javascript:initialize();">开始洗牌</a></button>
+			<button id="init"><a href="javascript:init();">玩家1抽取2张牌</a></button>
+			<button id="initrolestate"><a href="javascript:initrolestate();">洗角色牌</a></button>
+			<button id="rolestate"><a href="javascript:getrolestate();">选择角色</a></button>
+			<button id="refresh"><a href="javascript:refresh1();">更新玩家数据</a></<></button>
+			
+			<button id="end"><a href="javascript:end();">测试专用（没用）</a></button>
+			
+		</div>
+		<div class="box1">
+			<div class="handcard">
+				<div class="card" id="choose_role1"></div>
+				<div class="card" id="choose_role2"></div>
+				<div class="card" id="choose_role3"></div>
+				<div class="card" id="choose_role4"></div>
+				<div class="card" id="choose_role5"></div>
+				<div class="card" id="choose_role6"></div>
+				<div class="card" id="choose_role7"></div>
+			</div>
+		</div>
+	</body>
+	<script>
+		var role1="image/default.png";
+		var role2="image/default.png"
+		// var role2="image/role"+1+".png";
+		// document.getElementById('role2').src = role2;
+		// let rolesrc="image/role"+2+".png";
+		// let str="<img src="+rolesrc+" width='70px' height='100px'>"
+		//  $("#choose_role"+1).append(str);
+		function deleteall(){
+			deleteAll();
+		}
+		
+		function addtwoplayers(){
+			addPlayer("1","gyq",1);
+			addPlayer("2","twk",2);
+			insertReferee(1,1,49);
+		}
+		
+		function initialize(){
+			initCard();
+		}
+		
+		function init(){
+			for(var i=0;i<2;i++){
+			var heapfirst=getHeapfirst();
+			//console.log(getHeapfirst());
+			console.log(heapfirst);
+			var cardorder=selectFirstcard(heapfirst);
+			cardTohand("1",cardorder.card_order,cardorder.card_id);
+			}
+		}
+		//默认初始化9张，埋下3张
+		function initrolestate(){
+			initRolestate(9,6);
+		}
+		function getrolestate(){
+			
+			let rolestate=getRolestate();
+			let rolid;
+			for(var i=0;i<rolestate.length;i++){
+				//console.log(rolestate[i].role_id);
+				rolid=rolestate[i].role_id;
+				 let rolesrc="<img src="+"image/role"+rolid+".png"+' width="70px" height="100px">';
+				 $("#choose_role"+(i+1)).append(rolesrc);
+			}
+			// let rolesrc="image/role"+1+".png";
+			 // $("#choose_role"+i).append('<img src=""+rolesrc width="70px" height="100px">');
+			//$("#choose_role1").append('<img src="img/role"+rolid+".png" width="70px" height="100px">');
+		}
+		
+		function refresh1(){
+			refresh("1");
+			refresh("2");
+		}
+		
+		function end(){
+			var h=8;
+			h=f();
+			console.log(h);
+		}
+	</script>
+</html>

@@ -4,6 +4,7 @@ import demo.entity.Player_arch;
 import demo.entity.Player_card;
 
 import demo.mapper.PlayerMapper;
+import demo.mapper.RefereeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,8 @@ import java.util.Map;
 public class PlayerController {
     @Autowired
     private PlayerMapper playermapper;
+    @Autowired
+    private RefereeMapper refereeMapper;
     @ResponseBody
     @RequestMapping("/addPlayer")
     public void addPlayer(@RequestBody Map<String,Object> map){
@@ -27,6 +30,8 @@ public class PlayerController {
         int order=(int)map.get("order");
         Player player1=new Player(player_id,name,order);
         playermapper.addPlayer(player1);
+        int playrnum=refereeMapper.getPlayernum("1");
+        refereeMapper.updatePlayernum("1",playrnum+1);
     };
     @ResponseBody
     @RequestMapping("/getPlayer")
