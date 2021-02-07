@@ -30,14 +30,14 @@
 					</div>
 				</div>
 			</div>
-			<div class="handcard">
+			<div class="handcard" id="hand_player1">
+				<!-- <div class="card"></div>
 				<div class="card"></div>
 				<div class="card"></div>
 				<div class="card"></div>
 				<div class="card"></div>
 				<div class="card"></div>
-				<div class="card"></div>
-				<div class="card"></div>
+				<div class="card"></div> -->
 			</div>
 		</div>
 		
@@ -64,14 +64,14 @@
 					</div>
 				</div>
 			</div>
-			<div class="handcard">
-				<div class="card"></div>
-				<div class="card"></div>
-				<div class="card"></div>
-				<div class="card"></div>
-				<div class="card"></div>
-				<div class="card"></div>
-				<div class="card"></div>
+			<div class="handcard" id="hand_player2">
+				<!-- <div class="card" id="player1_card1"></div>
+				<div class="card" id="player1_card2"></div>
+				<div class="card" id="player1_card3"></div>
+				<div class="card" id="player1_card4"></div>
+				<div class="card" id="player1_card5"></div>
+				<div class="card" id="player1_card6"></div>
+				<div class="card" id="player1_card7"></div> -->
 			</div>
 		</div>
 		<div class="box1">
@@ -84,8 +84,8 @@
 			<button id="resource1"><a href="javascript:getmoney();">选择金币</a></button>
 			<button id="resource2"><a href="javascript:getcard(2);">选择卡牌</a></button>
 			<button id="refresh"><a href="javascript:refresh1();">更新玩家数据</a></<></button>
-			
-			<button id="end"><a href="javascript:end();">测试专用（没用）</a></button>
+			<button id="cardtime"><a href="javascript:cardtime();">回合开始</a></button>
+			<button id="end"><a href="javascript:end();">回合结束</a></button>
 			
 		</div>
 		<div class="box1">
@@ -118,9 +118,11 @@
 		}
 		//添加两个玩家
 		function addtwoplayers(){
+			$.ajaxSettings.async=false;
 			insertReferee(1,1,49);
 			
 			addPlayer("1","gyq",1);
+			
 			addPlayer("2","twk",2);
 			
 		}
@@ -142,6 +144,8 @@
 			var cardorder=selectFirstcard(heapfirst);
 			cardTohand("2",cardorder.card_order,cardorder.card_id);
 			}
+			updateMoney("1",4);
+			updateMoney("2",4);
 		}
 		//默认初始化9张，埋下3张
 		function initrolestate(){
@@ -187,8 +191,10 @@
 			for(var i=1;i<8;i++){
 				 $("#choose_role"+i).empty();
 			}
+			var state1=getState();
 			var order=getStateorder();
 			addMoney(order,2);
+			setNextstate(state1,order);
 		}
 		
 		function getcard(num){
@@ -223,12 +229,49 @@
 			handarr=[];
 		}
 		
-		//测试专用代码
-		function end(){
-			var h=8;
-			h=f();
-			console.log(h);
+		function cardtime(){
+			//出牌时间state=2默认
+			var state_order=getStateorder();
+			for(var i=1;i<8;i++){
+				 $("#choose_role"+i).empty();
+			}
+			handarr=[];
+			handarr=getPlayercard(state_order);
+			for(var i=0;i<handarr.length;i++){
+				var card1=handarr[i];
+				var cardid1=card1.card_id;
+				
+				var onclickstr=' onclick="hitcard('+i+')"';
+				 let cardsrc="<img src="+"image/card"+cardid1+".png"+' width="70px" height="100px" '+onclickstr+'>';
+				 
+				 var outerdiv = $("<div></div>");
+				 outerdiv.attr("class","card");
+				 outerdiv.attr("id","player"+state_order+"_card"+i);
+				// var innerdiv=$("<div></div>");
+				 outerdiv.append(cardsrc);
+				 
+				// var cardcontainer='<div class="card" id="player'+orderstate+'_card'+i+'"></div>'
+				// console.log(cardcontainer);
+				// $("#player"+orderstate+"_card"+i).append()
+				 $("#hand_player"+state_order).append(outerdiv);
+				// $("#player"+state_order+"card"+(i+1)).empty();
+				// $("#player"+state_order+"card"+(i+1)).append(cardsrc);
+			}
 		}
+		function hitcard(m){
+			state_order=getStateorder();
+			var player_card1=handarr[m];
+			cardToarch(player_card1.player_id,player_card1.card_id,player_card1.order);
+			$("#player"+state_order+"_card"+m).remove();
+		}
+		
+		function end(){
+			var state1=getState();
+			var stateorder1=getStateorder();
+			setNextstate(state1,stateorder1);
+			handarr=[];
+		}
+		//测试专用代码
 		function f(){
 			console.log("img ok");
 		}

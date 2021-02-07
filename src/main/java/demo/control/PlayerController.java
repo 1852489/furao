@@ -198,7 +198,7 @@ public class PlayerController {
     }
     @ResponseBody
     @RequestMapping("/getallCard")
-    public ArrayList<Player_card> getallCard(){
-        return playermapper.getallCard();
+    public ArrayList<Player_card> getallCard(String id){
+        return playermapper.getallCard(id);
     }
 }

@@ -68,7 +68,7 @@ public interface PlayerMapper {
     @Update("update player set `unique`=#{num} where player_id=#{id}")
     void updateUnique(String id,int num);
 
-    @Insert("insert into player_arch values(#{player_id},{arch_id},{order})")
+    @Insert("insert into player_arch values(#{player_id},#{arch_id},#{order})")
     void insertArch(Player_arch playerArch);
     @Delete("delete from player_arch where `order`=#{order}")
     void deleteArch(int order);
@@ -79,6 +79,6 @@ public interface PlayerMapper {
     void insertCard(Player_card playerCard);
     @Delete("delete from player_card where `order`=#{order}")
     void deleteCard(int order);
-    @Select("select * from player_card")
-    ArrayList<Player_card> getallCard();
+    @Select("select * from player_card where player_id=#{id}")
+    ArrayList<Player_card> getallCard(String id);
 }

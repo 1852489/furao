@@ -287,6 +287,57 @@ function addMoney(id,num){
 	  console.log(response);
 	});
 }
+//返回json数组
+function getPlayercard(id){
+	let arr=[];
+	var settings = {
+		async:false,
+	  "url": "http://localhost:8086/player/getallCard?id="+id,
+	  "method": "POST",
+	  "timeout": 0,
+	  "headers": {
+	    "Content-Type": "application/json"
+	  },
+	};
+	
+	$.ajax(settings).done(function (response) {
+	  console.log(response);
+	  arr=response;
+	});
+	return arr;
+}
+//此函数暂时不用
+function deletePlayercard(order){
+	var settings = {
+	  "url": "http://localhost:8086/player/deleteCard?order="+order,
+	  "method": "POST",
+	  "timeout": 0,
+	  "headers": {
+	    "Content-Type": "application/json"
+	  },
+	};
+	
+	$.ajax(settings).done(function (response) {
+	  console.log(response);
+	});
+}
+
+function cardToarch(player_id,card_id,order){
+	var settings = {
+	  "url": "http://localhost:8086/external/handToarch",
+	  "method": "POST",
+	  "timeout": 0,
+	  "headers": {
+	    "Content-Type": "application/json"
+	  },
+	  "data": JSON.stringify({"player_id":player_id,"card_id":card_id,"order":order}),
+	};
+	
+	$.ajax(settings).done(function (response) {
+	  console.log(response);
+	});
+}
+
 
 //测试专用
 function f(){

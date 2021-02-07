@@ -115,19 +115,19 @@ public class ExternalController {
         playermapper.insertArch(playerarch);
         playermapper.updatePoint(playerid,point1);
         if(card.getKind()==1){
-            playermapper.updateNoble(playerid,archkind.getNoble());
+            playermapper.updateNoble(playerid,archkind.getNoble()+1);
         }
         else  if(card.getKind()==2){
-            playermapper.updateReligious(playerid,archkind.getReligious());
+            playermapper.updateReligious(playerid,archkind.getReligious()+1);
         }
         else  if(card.getKind()==3){
-            playermapper.updateTrade(playerid,archkind.getTrade());
+            playermapper.updateTrade(playerid,archkind.getTrade()+1);
         }
         else  if(card.getKind()==4){
-            playermapper.updateMiltary(playerid,archkind.getMiltary());
+            playermapper.updateMiltary(playerid,archkind.getMiltary()+1);
         }
         else  if(card.getKind()==5){
-            playermapper.updateUnique(playerid,archkind.getUnique());
+            playermapper.updateUnique(playerid,archkind.getUnique()+1);
         }
     }
     @ResponseBody
@@ -171,20 +171,29 @@ public class ExternalController {
    @ResponseBody
     @RequestMapping("/setNextstate")
    public void setNextstate(int state,int order){
-
-        if(state==1)refereemapper.updateState("1",2);
+        if(state==0){
+            int num=refereemapper.getPlayernum("1");
+            if(order==num){
+                refereemapper.updateState("1",1);
+                refereemapper.updateStateorder("1",1);
+            }
+            else{
+                refereemapper.updateStateorder("1",order+1);
+            }
+        }
+        else if(state==1){
+            refereemapper.updateState("1",2);
+        }
         else {
             int num=refereemapper.getPlayernum("1");
             if(order==num){
+                refereemapper.updateState("1",0);
                 refereemapper.updateStateorder("1",1);
-                if(state==0){
-                    refereemapper.updateState("1",1);
-                }
-                else {
-                    refereemapper.updateState("1",0);
-                }
             }
-            else refereemapper.updateStateorder("1",order+1);
+            else {
+                refereemapper.updateState("1",1);
+                refereemapper.updateStateorder("1",order+1);
+            }
         }
    }
 
