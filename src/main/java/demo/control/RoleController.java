@@ -33,4 +33,9 @@ public class RoleController {
         return rolemapper.getSkill(id);
     }
 
+    @ResponseBody
+    @RequestMapping("/updateRoleleft")
+    public void updateRoleleft(String id,int n){
+        rolemapper.updateRoleleft(id,n);
+    }
 }

@@ -30,8 +30,8 @@ public class PlayerController {
         int order=(int)map.get("order");
         Player player1=new Player(player_id,name,order);
         playermapper.addPlayer(player1);
-        int playrnum=refereeMapper.getPlayernum("1");
-        refereeMapper.updatePlayernum("1",playrnum+1);
+       // int playrnum=refereeMapper.getPlayernum("1");
+       // refereeMapper.updatePlayernum("1",playrnum+1);
     };
     @ResponseBody
     @RequestMapping("/getPlayer")

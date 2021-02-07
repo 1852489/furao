@@ -7,7 +7,7 @@ public class Referee {
     int heap_last;
     int player_num=0;
     int state=0;
-    int state_order=0;
+    int state_order=1;
 
     public int getPlayer_num() {
         return player_num;
@@ -41,12 +41,12 @@ public class Referee {
         this.id = id;
     }
 
-    public Referee(String id, int crown_num, int heap_first, int heap_last) {
-        this.id=id;
-        this.crown_num = crown_num;
-        this.heap_first = heap_first;
-        this.heap_last = heap_last;
-    }
+//    public Referee(String id, int crown_num, int heap_first, int heap_last) {
+//        this.id=id;
+//        this.crown_num = crown_num;
+//        this.heap_first = heap_first;
+//        this.heap_last = heap_last;
+//    }
     public Referee(int crown_num, int heap_first, int heap_last) {
         this.crown_num = crown_num;
         this.heap_first = heap_first;

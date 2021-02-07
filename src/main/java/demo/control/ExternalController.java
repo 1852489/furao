@@ -35,6 +35,8 @@ public class ExternalController {
     @ResponseBody
     @RequestMapping("/initRolestate")
     public void initRolestate(int max,int choice){
+        int num=externalmapper.getPlayernum();
+        refereemapper.updatePlayernum("1",num);
         rolemapper.deleteRolestate();
         for(int i=1;i<=max;i++){
             rolemapper.insertRolestate(""+i,1);
@@ -86,12 +88,9 @@ public class ExternalController {
     }
     @ResponseBody
     @RequestMapping("/heapTolast")
-    public void heapTolast(@RequestBody Map<String,Object>map){
-        //int order=(int)map.get("order");
+    public void heapTolast(String card_id){
         int lastorder=refereemapper.getHeaplast("1");
-        String cardid=map.get("card_id").toString();
-        Card_order cardorder=new Card_order(lastorder,cardid);
-       // cardmapper.deleteFirstcard(order);
+        Card_order cardorder=new Card_order(lastorder,card_id);
         cardmapper.insertLastcard(cardorder);
         refereemapper.updateHeaplast("1",lastorder+1);
     }
@@ -168,6 +167,34 @@ public class ExternalController {
         }
 
     }
+
+   @ResponseBody
+    @RequestMapping("/setNextstate")
+   public void setNextstate(int state,int order){
+
+        if(state==1)refereemapper.updateState("1",2);
+        else {
+            int num=refereemapper.getPlayernum("1");
+            if(order==num){
+                refereemapper.updateStateorder("1",1);
+                if(state==0){
+                    refereemapper.updateState("1",1);
+                }
+                else {
+                    refereemapper.updateState("1",0);
+                }
+            }
+            else refereemapper.updateStateorder("1",order+1);
+        }
+   }
+
+    @ResponseBody
+    @RequestMapping("/addMoney")
+    public void addMoney(String id,int num){
+        int now=playermapper.getMoney(id);
+        playermapper.updateMoney(id,num+now);
+    }
+
 
 
 }

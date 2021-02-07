@@ -78,9 +78,11 @@
 			<button id="deleteall"><a href="javascript:deleteall();">清空数据（初始化动态table）</a></button>
 			<button id="addplayer"><a href="javascript:addtwoplayers();">添加两个player</a></button>
 			<button id="initialize"><a href="javascript:initialize();">开始洗牌</a></button>
-			<button id="init"><a href="javascript:init();">玩家1抽取2张牌</a></button>
+			<button id="init"><a href="javascript:init();">玩家各抽取2张牌</a></button>
 			<button id="initrolestate"><a href="javascript:initrolestate();">洗角色牌</a></button>
 			<button id="rolestate"><a href="javascript:getrolestate();">选择角色</a></button>
+			<button id="resource1"><a href="javascript:getmoney();">选择金币</a></button>
+			<button id="resource2"><a href="javascript:getcard(2);">选择卡牌</a></button>
 			<button id="refresh"><a href="javascript:refresh1();">更新玩家数据</a></<></button>
 			
 			<button id="end"><a href="javascript:end();">测试专用（没用）</a></button>
@@ -99,64 +101,136 @@
 		</div>
 	</body>
 	<script>
-		var role1="image/default.png";
-		var role2="image/default.png"
-		// var role2="image/role"+1+".png";
-		// document.getElementById('role2').src = role2;
-		// let rolesrc="image/role"+2+".png";
-		// let str="<img src="+rolesrc+" width='70px' height='100px'>"
-		//  $("#choose_role"+1).append(str);
+		let player1="1";
+		let player2="2";
+		class handcard{
+			constructor(player_id,card_id,order) {
+			    this.player_id=player_id;
+				this.card_id=card_id;
+				this.order=order;
+			}
+		}
+		let rolecard=[];
+		let handarr=[];
+		//清空动态表
 		function deleteall(){
 			deleteAll();
 		}
-		
+		//添加两个玩家
 		function addtwoplayers(){
+			insertReferee(1,1,49);
+			
 			addPlayer("1","gyq",1);
 			addPlayer("2","twk",2);
-			insertReferee(1,1,49);
+			
 		}
-		
+		//初始化牌堆
 		function initialize(){
 			initCard();
 		}
-		
+		//给角色分牌
 		function init(){
 			for(var i=0;i<2;i++){
 			var heapfirst=getHeapfirst();
-			//console.log(getHeapfirst());
 			console.log(heapfirst);
 			var cardorder=selectFirstcard(heapfirst);
 			cardTohand("1",cardorder.card_order,cardorder.card_id);
+			}
+			for(var i=0;i<2;i++){
+			var heapfirst=getHeapfirst();
+			console.log(heapfirst);
+			var cardorder=selectFirstcard(heapfirst);
+			cardTohand("2",cardorder.card_order,cardorder.card_id);
 			}
 		}
 		//默认初始化9张，埋下3张
 		function initrolestate(){
 			initRolestate(9,6);
 		}
+		//获得仍未被选择的角色牌
 		function getrolestate(){
 			
 			let rolestate=getRolestate();
 			let rolid;
 			for(var i=0;i<rolestate.length;i++){
-				//console.log(rolestate[i].role_id);
 				rolid=rolestate[i].role_id;
-				 let rolesrc="<img src="+"image/role"+rolid+".png"+' width="70px" height="100px">';
+				rolecard.push(rolid);
+				var onclickstr=' onclick="selectrole('+i+')"';
+				 let rolesrc="<img src="+"image/role"+rolid+".png"+' width="70px" height="100px" '+onclickstr+'>';
+				 console.log(rolesrc);
+				 $("#choose_role"+(i+1)).empty();
 				 $("#choose_role"+(i+1)).append(rolesrc);
+				// $("#choose_role"+(i+1)).css();
 			}
-			// let rolesrc="image/role"+1+".png";
-			 // $("#choose_role"+i).append('<img src=""+rolesrc width="70px" height="100px">');
-			//$("#choose_role1").append('<img src="img/role"+rolid+".png" width="70px" height="100px">');
+			$("#choose_role"+(rolestate.length+1)).empty();
 		}
-		
+		//刷新角色信息
 		function refresh1(){
 			refresh("1");
 			refresh("2");
 		}
 		
+		function selectrole(m){
+			var state1=getState();
+			var order=getStateorder();
+			var rolid1=rolecard[m];
+			console.log(rolid1);
+			var imgstr="image/role"+rolid1+".png";
+			$("#role"+order).attr("src",imgstr);
+			//此处order和playerid一致
+			updateRoleleft(rolid1,0);
+			setNextstate(state1,order);
+			rolecard=[];
+		}
+		
+		function getmoney(){
+			for(var i=1;i<8;i++){
+				 $("#choose_role"+i).empty();
+			}
+			var order=getStateorder();
+			addMoney(order,2);
+		}
+		
+		function getcard(num){
+			for(var i=1;i<8;i++){
+				 $("#choose_role"+i).empty();
+			}
+			//var handarr=[];
+			for(var i=0;i<num;i++){
+				var heapfirst=getHeapfirst();
+				var card1=selectFirstcard(heapfirst);
+				console.log(card1);
+				handarr.push(card1);
+				var cardid1=card1.card_id;
+				var onclickstr=' onclick="selectonecard('+i+')"';
+				 let cardsrc="<img src="+"image/card"+cardid1+".png"+' width="70px" height="100px" '+onclickstr+'>';
+				 $("#choose_role"+(i+1)).empty();
+				 $("#choose_role"+(i+1)).append(cardsrc);
+			}
+		}
+		
+		function selectonecard(m){
+			var state1=getState();
+			var order=getStateorder();
+			var cardid1=handarr[m].card_id;
+			var cardorder1=handarr[m].card_order;
+			cardTohand(order,cardorder1,cardid1);
+			var left;
+			if(m==0)left=1;
+			else left=0;
+			cardTolast(handarr[left].card_id);
+			setNextstate(state1,order);
+			handarr=[];
+		}
+		
+		//测试专用代码
 		function end(){
 			var h=8;
 			h=f();
 			console.log(h);
+		}
+		function f(){
+			console.log("img ok");
 		}
 	</script>
 </html>

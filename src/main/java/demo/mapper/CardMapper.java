@@ -24,5 +24,5 @@ public interface CardMapper {
     @Delete("delete from card_heap where card_order=#{order}")
     void deleteFirstcard(int order);
     @Insert("insert into card_heap values(#{card_order},#{card_id})")
-    void insertLastcard(Card_order cardorder1);
+    void insertLastcard(Card_order card_order);
 }

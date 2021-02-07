@@ -102,6 +102,21 @@ function cardTohand(playerid,order,cardid){
 	});
 }
 
+function cardTolast(cardid){
+	var settings = {
+	  "url": "http://localhost:8086/external/heapTolast?card_id="+cardid,
+	  "method": "POST",
+	  "timeout": 0,
+	  "headers": {
+	    "Content-Type": "application/json"
+	  },
+	};
+	
+	$.ajax(settings).done(function (response) {
+	  console.log(response);
+	});
+}
+
 function deleteAll(){
 	var settings = {
 	  "url": "http://localhost:8086/delete/deleteAll",
@@ -173,6 +188,104 @@ function getRolestate(){
 	  rolestate=response;
 	});
 	return rolestate;
+}
+
+function updateRoleleft(id,n){
+	var settings = {
+	  "url": "http://localhost:8086/role/updateRoleleft?id="+id+"&n="+n,
+	  "method": "POST",
+	  "timeout": 0,
+	  "headers": {
+	    "Content-Type": "application/json"
+	  },
+	};
+	
+	$.ajax(settings).done(function (response) {
+	  console.log(response);
+	});
+}
+
+function getState(){
+	let state=0;
+	var settings = {
+		async:false,
+	  "url": "http://localhost:8086/referee/getState?id=1",
+	  "method": "POST",
+	  "timeout": 0,
+	  "headers": {
+	    "Content-Type": "application/json"
+	  },
+	};
+	
+	$.ajax(settings).done(function (response) {
+	  console.log(response);
+	  state=response;
+	});
+	return state;
+}
+
+function getStateorder(){
+	let stateorder=0;
+	var settings = {
+		async:false,
+	  "url": "http://localhost:8086/referee/getStateorder?id=1",
+	  "method": "POST",
+	  "timeout": 0,
+	  "headers": {
+	    "Content-Type": "application/json"
+	  },
+	};
+	
+	$.ajax(settings).done(function (response) {
+	  console.log(response);
+	  stateorder=response;
+	});
+	return stateorder;
+}
+//这里没有id属性列表，referee的默认id=“1”，多盘游戏需要插入id属性
+function setNextstate(state,order){
+	var settings = {
+	  "url": "http://localhost:8086/external/setNextstate?state="+state+"&order="+order,
+	  "method": "POST",
+	  "timeout": 0,
+	  "headers": {
+	    "Content-Type": "application/json"
+	  },
+	};
+	
+	$.ajax(settings).done(function (response) {
+	  console.log(response);
+	});
+}
+
+function updateMoney(id,num){
+	var settings = {
+	  "url": "http://localhost:8086/player/updateMoney?id="+id+"&num="+num,
+	  "method": "POST",
+	  "timeout": 0,
+	  "headers": {
+	    "Content-Type": "application/json"
+	  },
+	};
+	
+	$.ajax(settings).done(function (response) {
+	  console.log(response);
+	});
+}
+
+function addMoney(id,num){
+	var settings = {
+	  "url": "http://localhost:8086/external/addMoney?id="+id+"&num="+num,
+	  "method": "POST",
+	  "timeout": 0,
+	  "headers": {
+	    "Content-Type": "application/json"
+	  },
+	};
+	
+	$.ajax(settings).done(function (response) {
+	  console.log(response);
+	});
 }
 
 //测试专用
